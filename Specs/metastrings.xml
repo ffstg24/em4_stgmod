@@ -1,0 +1,21 @@
+<meta>
+	<file name="mod:Lang/de/dialogs.xml" />
+	<file name="mod:Lang/de/sideeffects.xml" />
+	<file name="mod:Lang/de/fail.xml" />
+	<file name="mod:Lang/de/hints.xml" />
+	<file name="mod:Lang/de/mainmenu.xml" />
+	<file name="mod:Lang/de/mission.xml" />
+	<file name="mod:Lang/de/missiontips.xml" />
+	<file name="mod:Lang/de/missiontitles.xml" />
+	<file name="mod:Lang/de/objectives.xml" />
+	<file name="mod:Lang/de/talk.xml" />
+	<file name="mod:Lang/de/teach.xml" />
+	<file name="lang:events.xml" />
+	<file name="mod:Lang/de/names.xml" />
+	<file name="mod:Lang/de/gui.xml" />
+	<file name="mod:Specs/portraits.xml" />
+	<file name="lang:portraits.xml" />
+
+	<!--	file name="mod:Lang/de/stg_einsaetze.xml" /-->
+	<!--	file name="mod:Lang/de/stg_meldertyp.xml" /-->
+</meta>

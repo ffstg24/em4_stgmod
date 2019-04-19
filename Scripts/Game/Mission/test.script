@@ -1,0 +1,121 @@
+object Mission01 : MissionScript
+{
+	Mission01()
+	{
+		System::Log("KONSTRUKTOR: Missions-Konstruktor aufgerufen...");
+	}
+
+	void Start()
+	{
+		System::Log("START:Interface wird initialisiert...");
+
+		ScriptInterface::HideMap();
+		ScriptInterface::HideRadar();
+		ScriptInterface::HideNavigator();
+		ScriptInterface::HideInfoBar();
+		ScriptInterface::HideVehicleBrowser();
+		ScriptInterface::HideBriefing();
+		ScriptInterface::HideTips();
+		ScriptInterface::HideObjectives();    
+
+		//TODO: Hydranten- und Strassenkarte einbinden
+		//TODO: Alle GameDialogs initialisieren
+
+		System::Log("START:Fahrzeuge werden initialisiert...");
+		GameObjectList ol; GameObject o; float r[8];
+
+		const char* p = "mod:Prototypes/Objects/Equipment/bottle.e4p"; 	//Markierung für die Parkposition
+		float speed = 6.0f; 											//Standardgeschwindigkeit (ohne Sondersignal) festlegen
+
+		/*================================
+
+		Fahrzeuge der Feuerwehr Abt. Stadt
+
+		================================*/
+		
+		ol = Game::GetGameObjectsWithPrefix("stg");	
+		if(ol.GetNumObjects())
+		{
+			for(int i = 0; i < ol.GetNumObjects(); i++)
+			{
+				Vehicle v(&ol.GetObject(i));
+				 
+				v.EnableBlueLights(false);
+				v.EnableBreakLights(false);
+				v.EnableSpecialLights(false);
+				v.EnableHeadLights(false);
+				//v.SetCommandable(false);
+				v.SetCommandable(true); //DEBUG: Nach Testen wieder auf false setzen
+				v.SetSpeed(speed);
+				v.RemoveCommand("GoHome");
+
+				//Parkplatz für Fahrzeug erstellen
+				char pname[32]; char d[128]; char* vname = v.GetName();
+				snprintf(pname,32,"p_%s",vname);
+				o=Game::CreateObject(p,pname);
+				o.SetPosition(v.GetPosition());
+				v.GetRotation(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8]);
+				o.SetRotation(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8]);
+
+				//Sitzplätze und fahrzeugspezifische Skripte zuweisen
+				if(!StrCompare(v.GetName(),"stg111"))
+				{         	          
+        				v.SetMaxPassengers(4);                    
+						v.SetMaxTransports(0);  
+				}
+				else if(!StrCompare(v.GetName(),"stg146"))
+				{      	          
+        				v.SetMaxPassengers(9);                    
+						v.SetMaxTransports(0);  
+				}
+				else if(!StrCompare(v.GetName(),"stg133"))
+				{       	          
+        				v.SetMaxPassengers(3);                    
+						v.SetMaxTransports(0);  
+				}
+				else if(!StrCompare(v.GetName(),"stg124"))
+				{      	          
+        				v.SetMaxPassengers(3);                    
+						v.SetMaxTransports(0);  
+				}
+				else if(!StrCompare(v.GetName(),"stg144"))
+				{        	          
+        				v.SetMaxPassengers(9);                    
+						v.SetMaxTransports(0);  
+				}
+				else if(!StrCompare(v.GetName(),"stg161"))
+				{    
+        				v.SetMaxPassengers(3);                    
+						v.SetMaxTransports(0);  
+				}
+				else if(!StrCompare(v.GetName(),"stg159"))
+				{      
+        				v.SetMaxPassengers(6);                    
+						v.SetMaxTransports(0);  
+				}
+				else if(!StrCompare(v.GetName(),"stg149"))
+				{       
+        				v.SetMaxPassengers(9);                    
+						v.SetMaxTransports(0);  
+				}
+				else if(!StrCompare(v.GetName(),"stg119"))
+				{        
+        				v.SetMaxPassengers(9);                    
+						v.SetMaxTransports(0);  
+				}
+				else
+				{
+					System::Log("[ERROR] START: Unbekanntes Fahrzeug gefunden:");
+					System::Log(v.GetName());
+				} 	
+
+				snprintf(d,128,"Fahrzeug %s wurde Parkposition %s erfolgreich zugewiesen!",vname,pname); System::Log(d);
+			}
+		}
+		else  System::Log("[ERROR] START: Keine Fahrzeuge mit diesem Präfix auf der Map!");
+
+		//TODO: Rotes Kreuz etc einfügen
+
+
+	}
+};
